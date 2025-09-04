@@ -29,7 +29,9 @@ import statusBg from "./assets/img/elrodika-05.png";
 import nv12 from "./assets/img/nv-12.png";
 import bgTime from "./assets/img/br-season.jpeg";
 import seasonImg from "./assets/img/season 2025.png";
-
+import logosword from "./assets/img/TheGuardian_Logo_VIE 3.png"
+import chinhSach from "./assets/img/Chính sách bảo mật.pdf"
+import dieuKhoan from "./assets/img/The Guardians_Điều khoản sử dụng.pdf"
 
 import canonDefault from "./assets/img/character=canon, state=default.png";
 import canonZoom from "./assets/img/character=canon, state=zoom.png";
@@ -61,7 +63,55 @@ import event4 from "./assets/img/kram-11.png";
 const eventImages = [event1, event2, event3, event4];
 
 function App() {
- const [timeLeft, setTimeLeft] = useState({
+
+ const [commentsColumn1, setCommentsColumn1] = useState([
+    "Đắm chìm trong một thế giới sống động như thật!... ",
+    "Đồ họa quá đỉnh! Thế giới trong game được thiết kế tỉ mỉ...",
+    "Cảm giác chiến thắng sau mỗi thử thách thật sự thỏa mãn...Cảm giác chiến thắng sau mỗi thử thách thật sự thỏa mãn...",
+    "Đắm chìm trong một thế giới sống động như thật! Đồ họa của game thực sự là một tác phẩm nghệ thuật. Từ những ngọn cỏ lay động trước gió, ánh nắng xuyên qua tán lá, cho đến kiến trúc tráng lệ của các thành phố cổ kính, mọi chi tiết đều được chăm chút tỉ mỉ đến kinh ngạc. Hiệu ứng ánh sáng và đổ bóng chân thực càng làm tăng thêm chiều sâu và sự cuốn hút cho thế giới ảo này, khiến người chơi hoàn toàn bị mê hoặc và quên đi ranh giới giữa thực và ảo.",
+    "Cảm giác chiến thắng sau mỗi thử thách thật sự thỏa mãn..."
+  ]);
+
+  const commentsColumn2 = [
+    "Gameplay sáng tạo và gây nghiện!...",
+    "Trải nghiệm gameplay mượt mà và đầy thử thách!...",
+    "Gameplay sáng tạo và gây nghiện! Cơ chế chiến đấu mượt mà, các nhiệm vụ đa dạng và luôn có điều gì đó mới mẻ để khám phá.",
+    "Trải nghiệm gameplay mượt mà và đầy thử thách!...",
+    "Trải nghiệm gameplay mượt mà và đầy thử thách!...",
+    "Trải nghiệm gameplay mượt mà và đầy thử thách! Cơ chế chiến đấu của game được thiết kế tinh tế, đòi hỏi người chơi không chỉ có kỹ năng cá nhân mà còn phải có tư duy chiến thuật. Sự đa dạng trong cách xây dựng nhân vật, lựa chọn vũ khí và kỹ năng mở ra vô vàn chiến thuật khác nhau. Các nhiệm vụ được thiết kế thông minh, không lặp lại nhàm chán mà luôn mang đến những thử thách mới mẻ, đòi hỏi người chơi phải vận dụng tất cả những gì mình có để vượt qua.",
+
+  ];
+
+  const commentsColumn3 = [
+    "Hiệu ứng ánh sáng và đổ bóng chân thực...",
+    "Game mang lại những khoảnh khắc đáng nhớ...",
+    "Đắm chìm trong một thế giới sống động như thật! Đồ họa của game thực sự là một tác phẩm nghệ thuật. Từ những ngọn cỏ lay động trước gió, ánh nắng xuyên qua tán lá, cho đến kiến trúc tráng lệ của các thành phố cổ kính, mọi chi tiết đều được chăm chút tỉ mỉ đến kinh ngạc. Hiệu ứng ánh sáng và đổ bóng chân thực càng làm tăng thêm chiều sâu và sự cuốn hút cho thế giới ảo này, khiến người chơi hoàn toàn bị mê hoặc và quên đi ranh giới giữa thực và ảo.",
+    "Game mang lại những khoảnh khắc đáng nhớ...",
+    "Game mang lại những khoảnh khắc đáng nhớ...",
+    
+  ];
+
+  const [newComment, setNewComment] = useState("");
+
+  // hàm render 1 cột
+  const renderColumn = (comments) => (
+    <div className="column">
+      {comments.map((text, i) => (
+        <div key={i} className="comment">
+          @decaf
+          <br />
+          {text}
+        </div>
+      ))}
+    </div>
+  );
+
+  const handleAddComment = () => {
+    if (newComment.trim() === "") return;
+    setCommentsColumn1([...commentsColumn1, newComment]);
+    setNewComment(""); // clear textarea
+  };
+  const [timeLeft, setTimeLeft] = useState({
     days: "00",
     hours: "00",
     minutes: "00",
@@ -503,7 +553,7 @@ function App() {
           zIndex: 1,
         }}
       >
-        <div className="container"  data-aos-delay="100" >
+        <div className="container" data-aos-delay="100" >
           <div className="row gy-4">
             <div className="col-lg-8 stats-card">
               <article className="news-stats-card">
@@ -517,9 +567,9 @@ function App() {
                       }}
                     >
                       Chào mừng đến với thế giới của những cuộc phiêu lưu bất tận! Game nhập vai (RPG) không chỉ là một
-                    trò chơi, mà là một cánh cửa mở ra những câu chuyện huyền bí, nơi bạn không chỉ điều khiển nhân vật
-                    mà còn sống cuộc đời của họ. Hãy tạo dựng số phận của riêng bạn, từ một người lính vô danh trở thành
-                    anh hùng cứu thế giới, hoặc một pháp sư quyền năng điều khiển các nguyên tố.
+                      trò chơi, mà là một cánh cửa mở ra những câu chuyện huyền bí, nơi bạn không chỉ điều khiển nhân vật
+                      mà còn sống cuộc đời của họ. Hãy tạo dựng số phận của riêng bạn, từ một người lính vô danh trở thành
+                      anh hùng cứu thế giới, hoặc một pháp sư quyền năng điều khiển các nguyên tố.
                     </p>
                   </div>
                 </div>
@@ -554,25 +604,25 @@ function App() {
           <button className="">NHÂN VẬT</button>
           <img src={tabDot} alt="dot" className="tab-dot" />
         </div>
-<div className="container character-main">
-  <div className="character-list">
-    {characters.map((char, i) => (
-      <div className="character-card" key={i}>
-        <div className="character-image">
-          <img src={char.default} alt={`${char.key}-default`} className="default" />
-          <img src={char.zoom} alt={`${char.key}-hover`} className="hover" />
+        <div className="container character-main">
+          <div className="character-list">
+            {characters.map((char, i) => (
+              <div className="character-card" key={i}>
+                <div className="character-image">
+                  <img src={char.default} alt={`${char.key}-default`} className="default" />
+                  <img src={char.zoom} alt={`${char.key}-hover`} className="hover" />
+                </div>
+                <div className="character-overlay">
+                  <h3>{`CHARACTER ${i + 1}`}</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur. Cras aliquet cras et cras aliquam
+                    volutpat non dolor sagittis sed.
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="character-overlay">
-          <h3>{`CHARACTER ${i + 1}`}</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur. Cras aliquet cras et cras aliquam
-            volutpat non dolor sagittis sed.
-          </p>
-        </div>
-      </div>
-    ))}
-  </div>
-</div>
         <div className="character-btn">
           <a href="cam-nang.html" className="btn-stats-more-character">
             XEM THÊM <i className="bi bi-arrow-right"></i>
@@ -625,132 +675,186 @@ function App() {
         </div>
       </section>
       {/* ===== COMMENTS ===== */}
-      <section
-        id="testimonials"
-        className="testimonials section"
-        style={{
-          backgroundImage: "url('/assets/img/blood-lucarly.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="container section-title" data-aos="fade-up">
-          <h2>Cộng đồng nói gì?</h2>
-          <p>Những chia sẻ từ các game thủ hàng đầu</p>
-        </div>
+    <section
+      id="services"
+      className="services section"
+      style={{
+        backgroundImage:
+          "linear-gradient(#272C36 100%, #2E3F55 80%, #545660 80%)",
+        padding: "20px 0px",
+      }}
+    >
+      <div className="body-comments">
+        <div className="comments-layout">
+          {/* Cột bình luận */}
+          <div className="comments-wrapper">
+            {renderColumn(commentsColumn1)}
+            {renderColumn(commentsColumn2)}
+            {renderColumn(commentsColumn3)}
+          </div>
 
-        <div className="container">
-          <div className="row gy-4">
-            {[
-              {
-                img: "testimonials/testimonials-1.jpg",
-                name: "Nguyễn Văn A",
-                role: "Game thủ chuyên nghiệp",
-                text: "Trò chơi mang lại trải nghiệm cực kỳ hấp dẫn!",
-              },
-              {
-                img: "testimonials/testimonials-2.jpg",
-                name: "Trần Thị B",
-                role: "Streamer",
-                text: "Mình rất thích chế độ xếp hạng và các sự kiện trong game.",
-              },
-              {
-                img: "testimonials/testimonials-3.jpg",
-                name: "Lê Văn C",
-                role: "Game thủ",
-                text: "Đồ họa đẹp mắt, gameplay cuốn hút. Rất đáng để trải nghiệm.",
-              },
-            ].map((c, i) => (
-              <div className="col-lg-4" key={i}>
-                <div className="testimonial-item" data-aos="fade-up" data-aos-delay={100 * (i + 1)}>
-                  <img src={`/assets/img/${c.img}`} className="testimonial-img" alt={c.name} />
-                  <h3>{c.name}</h3>
-                  <h4>{c.role}</h4>
-                  <p>
-                    <i className="bi bi-quote quote-icon-left"></i>
-                    {c.text}
-                    <i className="bi bi-quote quote-icon-right"></i>
-                  </p>
-                </div>
-              </div>
-            ))}
+          {/* Form bình luận */}
+          <div
+            className="content-box"
+            style={{
+              backgroundImage:
+                "linear-gradient(#272C36 100%, #2E3F55 80%, #545660 80%)",
+              padding: "20px 0px",
+            }}
+          >
+            <h3>NỘI DUNG</h3>
+            <textarea
+              placeholder="Nhập nội dung của bạn"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+            />
+            <br />
+            <button onClick={handleAddComment}>BÌNH LUẬN →</button>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
 
       {/* ===== FOOTER ===== */}
-      <footer id="footer" className="footer">
-        <div className="footer-top">
-          <div className="container">
-            <div className="row gy-4">
-              <div className="col-lg-4 col-md-6 footer-info">
-                <a href="index.html" className="logo d-flex align-items-center">
-                  <span>DEWI</span>
-                </a>
-                <p>
-                  DEWI là tựa game nhập vai MMORPG với đồ họa ấn tượng, cốt truyện hấp dẫn
-                  và cộng đồng người chơi đông đảo.
-                </p>
-                <div className="social-links mt-3">
-                  <a href="#" className="twitter">
-                    <i className="bi bi-twitter"></i>
-                  </a>
-                  <a href="#" className="facebook">
-                    <i className="bi bi-facebook"></i>
-                  </a>
-                  <a href="#" className="instagram">
-                    <i className="bi bi-instagram"></i>
-                  </a>
-                  <a href="#" className="youtube">
-                    <i className="bi bi-youtube"></i>
-                  </a>
-                </div>
-              </div>
+       <footer
+      className="tv-footer"
+      style={{ fontFamily: "'Times New Roman', Times, serif" }}
+    >
+      <div className="tv-top">
+        <div className="tv-left">
+          <img
+            src={logosword}
+            alt="sword logo"
+            className="tv-sword-large"
+          />
+        </div>
 
-              <div className="col-lg-2 col-md-6 footer-links">
-                <h4>Liên kết</h4>
-                <ul>
-                  <li><i className="bi bi-chevron-right"></i> <a href="#">Trang chủ</a></li>
-                  <li><i className="bi bi-chevron-right"></i> <a href="#">Tin tức</a></li>
-                  <li><i className="bi bi-chevron-right"></i> <a href="#">Cẩm nang</a></li>
-                  <li><i className="bi bi-chevron-right"></i> <a href="#">Hỗ trợ</a></li>
-                  <li><i className="bi bi-chevron-right"></i> <a href="#">Liên hệ</a></li>
-                </ul>
-              </div>
+        <div className="tv-main">
+          <div
+            className="tv-welcome"
+            style={{ fontFamily: "'Times New Roman', Times, serif" }}
+          >
+            CHÀO MỪNG CÁC VỆ THẦN !
+          </div>
 
-              <div className="col-lg-3 col-md-6 footer-contact">
-                <h4>Liên hệ</h4>
-                <p>
-                  123 Đường ABC <br />
-                  Quận XYZ, TP.HCM <br />
-                  Việt Nam <br /><br />
-                  <strong>Điện thoại:</strong> +84 123 456 789<br />
-                  <strong>Email:</strong> info@dewivn.com<br />
-                </p>
-              </div>
+          <h1 className="tv-heading">
+            KẾT NỐI VỚI <span>THẾ GIỚI VỆ THẦN</span>
+          </h1>
 
-              <div className="col-lg-3 col-md-6 footer-newsletter">
-                <h4>Nhận tin tức mới</h4>
-                <p>Đăng ký để không bỏ lỡ các sự kiện và cập nhật mới nhất.</p>
-                <form>
-                  <input type="email" name="email" placeholder="Email của bạn" />
-                  <input type="submit" value="Đăng ký" />
-                </form>
-              </div>
+          <p
+            className="tv-sub"
+            style={{ fontFamily: "'Times New Roman', Times, serif" }}
+          >
+            Cập nhật sắc lệnh vệ thần hàng tuần để không bỏ lỡ tin tức quan trọng
+            và cơ hội vàng sở hữu NFT trước ra mắt! Đây là chìa khóa để bạn dẫn
+            đầu trong thế giới vệ thần!
+          </p>
+
+          <form className="tv-form" action="#">
+            <div className="tv-inputs">
+              <label className="lbl">
+                <div className="lbl-title">Tên của bạn</div>
+                <input
+                  className="tv-input"
+                  type="text"
+                  placeholder="Nhập tên của bạn"
+                />
+              </label>
+
+              <label className="lbl">
+                <div className="lbl-title">Email của bạn</div>
+                <input
+                  className="tv-input"
+                  type="email"
+                  placeholder="Nhập email của bạn"
+                />
+              </label>
             </div>
-          </div>
-        </div>
 
-        <div className="container">
-          <div className="copyright">
-            &copy; 2025 <strong><span>DEWI</span></strong>. All Rights Reserved
+            <div className="tv-submit-wrap">
+              <button className="tv-btn" type="submit">
+                <a href="dang-ky.html" style={{ color: "#233D4D",textDecoration:"none" }}>
+                  ĐĂNG KÝ
+                </a>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {/* separator row */}
+      <div className="tv-sep-row">
+        <div className="sep-inner">
+          <div className="sep-logo">
+            <img
+              src={logo}
+              alt="small sword"
+              className="tv-sword-small"
+            />
           </div>
-          <div className="credits">
-            Thiết kế bởi <a href="#">VK Entertainment</a>
+
+          <nav className="sep-nav">
+            <a href="index.html">TRANG CHỦ</a>
+            <a href="cam-nang.html">GIỚI THIỆU</a>
+            <a href="#rank">BẢNG XẾP HẠNG</a>
+            <a href="cskh.html">HỖ TRỢ</a>
+          </nav>
+
+          <div className="sep-socials">
+            <a
+              href="#"
+              className="ic"
+              style={{ color: "#ECC689", fontSize: "16px" }}
+            >
+              <i className="bi bi-twitter-x"></i>
+            </a>
+            <a
+              href="#"
+              className="ic"
+              style={{ color: "#ECC689", fontSize: "16px" }}
+            >
+              <i className="bi bi-youtube"></i>
+            </a>
+            <a
+              href="#"
+              className="ic"
+              style={{ color: "#ECC689", fontSize: "16px" }}
+            >
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a
+              href="#"
+              className="ic"
+              style={{ color: "#ECC689", fontSize: "16px" }}
+            >
+              <i className="bi bi-instagram"></i>
+            </a>
           </div>
         </div>
-      </footer>
+      </div>
+
+      <div className="tv-sep"></div>
+
+      <div className="tv-bottom">
+        <div className="b-center">Bản quyền thuộc về @VKENTERTAINMENTJSC.</div>
+        <div className="b-right">
+          <a
+            href={chinhSach}
+            style={{ color: "#ECC689",textDecoration:"none" }}
+          >
+            CHÍNH SÁCH QUYỀN RIÊNG TƯ
+          </a>{" "}
+          |{" "}
+          <a
+            href={dieuKhoan}
+            style={{ color: "#ECC689",textDecoration:"none" }}
+          >
+            ĐIỀU KHOẢN SỬ DỤNG
+          </a>
+        </div>
+      </div>
+    </footer>
 
     </div>
   );
