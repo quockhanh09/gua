@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+// import Layout from "./Layout.jsx";
+import Header from "./components/Header";
+import Countdown from "./components/Countdown";
+import Footer from "./components/Footer";
+import Contact from "./components/Contact";
 import "./style/App.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
@@ -11,7 +17,7 @@ import 'flag-icons/css/flag-icons.min.css'
 
 //
 import logo from "./assets/img/Logo-name.png";
-import iconGlobal from "./assets/img/Icon.svg";
+// import iconGlobal from "./assets/img/Icon.svg";
 import heroBg from "./assets/img/volcano-01.png";
 import iconYoutube from "./assets/img/Icon-youtube.svg";
 import iconInsta from "./assets/img/Icon-insta.svg";
@@ -59,6 +65,7 @@ import event1 from "./assets/img/lucarly-08.png";
 import event2 from "./assets/img/lucarly-02.png";
 import event3 from "./assets/img/lucarly-01.png";
 import event4 from "./assets/img/kram-11.png";
+
 
 const eventImages = [event1, event2, event3, event4];
 
@@ -111,6 +118,7 @@ function App() {
     setCommentsColumn1([...commentsColumn1, newComment]);
     setNewComment(""); // clear textarea
   };
+
   const [timeLeft, setTimeLeft] = useState({
     days: "00",
     hours: "00",
@@ -240,55 +248,17 @@ function App() {
 
 
   return (
+  <Router>
     <div className="index-page">
-      {/* ===== HEADER ===== */}
-      <header id="header" className="header d-flex align-items-center fixed-top">
-        <div className="container-fluid container-xl position-relative d-flex align-items-center">
-          <a href="index.html" className="logo d-flex align-items-center me-auto">
-            <img
-              src={logo}
-              alt="Dewi Logo"
-              style={{ height: "300px" }}
-            />
-          </a>
-          <nav id="navmenu" className="navmenu">
-            <ul>
-              <li>
-                <a href="index.html" className="active" style={{ padding: "10px 20px" }}>
-                  TRANG CHỦ
-                </a>
-              </li>
-              <li>
-                <a href="tin-tuc.html" style={{ padding: "10px 20px" }}>
-                  TIN TỨC
-                </a>
-              </li>
-              <li>
-                <a href="cam-nang.html" style={{ padding: "10px 20px" }}>
-                  CẨM NANG
-                </a>
-              </li>
-              <li>
-                <a href="cskh.html" style={{ padding: "10px 20px" }}>
-                  HỖ TRỢ
-                </a>
-              </li>
-              <li className="login-item">
-                <img src={iconGlobal} alt="Globe Icon" className="icon-globe" />
-                <button className="button-dow">
-                  <a href="dang-nhap.html" style={{ color: "#2E3F55" }}>
-                    ĐĂNG NHẬP
-                  </a>
-                </button>
-              </li>
-              <i className="mobile-nav-toggle d-xl-none bi bi-list"></i>
-            </ul>
-          </nav>
-        </div>
-      </header>
-
-      {/* ===== HERO ===== */}
-      <section
+      
+      <Header/>
+      <Routes>
+        
+       <Route
+        path="/" 
+        element={
+        <>
+        <section
         id="hero"
         className="hero section"
         style={{
@@ -348,9 +318,9 @@ function App() {
         </div>
       </section>
 
-      {/* ===== ABOUT SECTION ===== */}
+     
       <section id="about" className="about section">
-        {/* Menu */}
+     
         <div className="tab-menu">
           <button className="tab-link active" data-tab="news">TIN TỨC</button>
           <img src={tabDot} alt="dot" className="tab-dot" />
@@ -359,14 +329,13 @@ function App() {
           <button className="tab-link" data-tab="event">SỰ KIỆN</button>
         </div>
 
-        {/* ===================== TAB NỘI DUNG ===================== */}
+       
 
-        {/* Tin tức */}
         <div id="news" className="tab-content active" style={{ fontFamily: "'Times New Roman', Times, serif" }}>
           <div className="news-grid">
             {[1, 2, 3, 4].map((i) => (
 
-              <article className="news-card" >
+              <article className="news-card" key={i} >
                 <div className="news-inner">
                   <div className="news-thumb">
                     <img src={ttImg} alt={`news ${i}`} />
@@ -629,234 +598,17 @@ function App() {
           </a>
         </div>
       </section>
-
-      {/* ===== SEASON COUNTDOWN ===== */}
-      <section
-        id="season"
-        className="season section"
-        style={{
-          backgroundImage: `url(${bgTime})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          padding: "50px 0",
-          textAlign: "center",
-        }}
-      >
-        <div className="container-season">
-          <img src={seasonImg} alt="season 2025" />
-        </div>
-
-        <div className="countdown">
-          {timeLeft ? (
-            <>
-              <div className="time-box">
-                <div>{timeLeft.days}</div>
-                <span>NGÀY</span>
-              </div>
-              <div className="divider"></div>
-              <div className="time-box">
-                <div>{timeLeft.hours}</div>
-                <span>GIỜ</span>
-              </div>
-              <div className="divider"></div>
-              <div className="time-box">
-                <div>{timeLeft.minutes}</div>
-                <span>PHÚT</span>
-              </div>
-              <div className="divider"></div>
-              <div className="time-box">
-                <div>{timeLeft.seconds}</div>
-                <span>GIÂY</span>
-              </div>
-            </>
-          ) : (
-            <h2 style={{ color: "#fff" }}>Sự kiện đã bắt đầu!</h2>
-          )}
-        </div>
-      </section>
-      {/* ===== COMMENTS ===== */}
-    <section
-      id="services"
-      className="services section"
-      style={{
-        backgroundImage:
-          "linear-gradient(#272C36 100%, #2E3F55 80%, #545660 80%)",
-        padding: "20px 0px",
-      }}
-    >
-      <div className="body-comments">
-        <div className="comments-layout">
-          {/* Cột bình luận */}
-          <div className="comments-wrapper">
-            {renderColumn(commentsColumn1)}
-            {renderColumn(commentsColumn2)}
-            {renderColumn(commentsColumn3)}
-          </div>
-
-          {/* Form bình luận */}
-          <div
-            className="content-box"
-            style={{
-              backgroundImage:
-                "linear-gradient(#272C36 100%, #2E3F55 80%, #545660 80%)",
-              padding: "20px 0px",
-            }}
-          >
-            <h3>NỘI DUNG</h3>
-            <textarea
-              placeholder="Nhập nội dung của bạn"
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-            />
-            <br />
-            <button onClick={handleAddComment}>BÌNH LUẬN →</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-      {/* ===== FOOTER ===== */}
-       <footer
-      className="tv-footer"
-      style={{ fontFamily: "'Times New Roman', Times, serif" }}
-    >
-      <div className="tv-top">
-        <div className="tv-left">
-          <img
-            src={logosword}
-            alt="sword logo"
-            className="tv-sword-large"
-          />
-        </div>
-
-        <div className="tv-main">
-          <div
-            className="tv-welcome"
-            style={{ fontFamily: "'Times New Roman', Times, serif" }}
-          >
-            CHÀO MỪNG CÁC VỆ THẦN !
-          </div>
-
-          <h1 className="tv-heading">
-            KẾT NỐI VỚI <span>THẾ GIỚI VỆ THẦN</span>
-          </h1>
-
-          <p
-            className="tv-sub"
-            style={{ fontFamily: "'Times New Roman', Times, serif" }}
-          >
-            Cập nhật sắc lệnh vệ thần hàng tuần để không bỏ lỡ tin tức quan trọng
-            và cơ hội vàng sở hữu NFT trước ra mắt! Đây là chìa khóa để bạn dẫn
-            đầu trong thế giới vệ thần!
-          </p>
-
-          <form className="tv-form" action="#">
-            <div className="tv-inputs">
-              <label className="lbl">
-                <div className="lbl-title">Tên của bạn</div>
-                <input
-                  className="tv-input"
-                  type="text"
-                  placeholder="Nhập tên của bạn"
-                />
-              </label>
-
-              <label className="lbl">
-                <div className="lbl-title">Email của bạn</div>
-                <input
-                  className="tv-input"
-                  type="email"
-                  placeholder="Nhập email của bạn"
-                />
-              </label>
-            </div>
-
-            <div className="tv-submit-wrap">
-              <button className="tv-btn" type="submit">
-                <a href="dang-ky.html" style={{ color: "#233D4D",textDecoration:"none" }}>
-                  ĐĂNG KÝ
-                </a>
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      {/* separator row */}
-      <div className="tv-sep-row">
-        <div className="sep-inner">
-          <div className="sep-logo">
-            <img
-              src={logo}
-              alt="small sword"
-              className="tv-sword-small"
-            />
-          </div>
-
-          <nav className="sep-nav">
-            <a href="index.html">TRANG CHỦ</a>
-            <a href="cam-nang.html">GIỚI THIỆU</a>
-            <a href="#rank">BẢNG XẾP HẠNG</a>
-            <a href="cskh.html">HỖ TRỢ</a>
-          </nav>
-
-          <div className="sep-socials">
-            <a
-              href="#"
-              className="ic"
-              style={{ color: "#ECC689", fontSize: "16px" }}
-            >
-              <i className="bi bi-twitter-x"></i>
-            </a>
-            <a
-              href="#"
-              className="ic"
-              style={{ color: "#ECC689", fontSize: "16px" }}
-            >
-              <i className="bi bi-youtube"></i>
-            </a>
-            <a
-              href="#"
-              className="ic"
-              style={{ color: "#ECC689", fontSize: "16px" }}
-            >
-              <i class="bi bi-facebook"></i>
-            </a>
-            <a
-              href="#"
-              className="ic"
-              style={{ color: "#ECC689", fontSize: "16px" }}
-            >
-              <i className="bi bi-instagram"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div className="tv-sep"></div>
-
-      <div className="tv-bottom">
-        <div className="b-center">Bản quyền thuộc về @VKENTERTAINMENTJSC.</div>
-        <div className="b-right">
-          <a
-            href={chinhSach}
-            style={{ color: "#ECC689",textDecoration:"none" }}
-          >
-            CHÍNH SÁCH QUYỀN RIÊNG TƯ
-          </a>{" "}
-          |{" "}
-          <a
-            href={dieuKhoan}
-            style={{ color: "#ECC689",textDecoration:"none" }}
-          >
-            ĐIỀU KHOẢN SỬ DỤNG
-          </a>
-        </div>
-      </div>
-    </footer>
+      </>
+      }
+      /> 
+      <Route path="/Contact" element={<Contact />} />
+    </Routes>
+    <Countdown/>
+    {/* ===== FOOTER ===== */}
+    <Footer/>
 
     </div>
+</Router>
   );
 }
 
