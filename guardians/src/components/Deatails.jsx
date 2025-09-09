@@ -239,9 +239,16 @@ function GameContent() {
   });
 
   // Khi click nhân vật
-  const handleSelectChar = (charKey) => {
-    setLocked(charKey); // click -> khóa luôn
-  };
+const handleSelectChar = (charKey) => {
+  if (locked === charKey) {
+    // Nếu đang click lại chính nhân vật đã khóa => hủy chọn
+    setLocked(null);
+    setHovered(null); // reset luôn hover cho chắc
+  } else {
+    // Ngược lại thì khóa nhân vật mới
+    setLocked(charKey);
+  }
+};
 
   // Khi hover nhân vật
   const handleHoverChar = (charKey) => {
@@ -282,7 +289,7 @@ useEffect(() => {
    <section
       id="service-details"
       className="service-details section"
-      style={{ padding: "10px 0", backgroundImage: `url(${bgDe})` }}
+      style={{ padding: "30px 0", backgroundImage: `url(${bgDe})` }}
     >
       {/* Nhân Vật Chính */}
       <div style={{ marginTop: "140px" }}>
