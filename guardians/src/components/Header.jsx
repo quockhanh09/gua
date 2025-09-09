@@ -22,12 +22,12 @@ function Header() {
                    </a>
                  </li>
                  <li>
-                   <a href="tin-tuc.html" style={{ padding: "10px 20px" }}>
+                   <a href="/News" style={{ padding: "10px 20px" }}>
                      TIN TỨC
                    </a>
                  </li>
                  <li>
-                   <a href="cam-nang.html" style={{ padding: "10px 20px" }}>
+                   <a href="/Deatails" style={{ padding: "10px 20px" }}>
                      CẨM NANG
                    </a>
                  </li>

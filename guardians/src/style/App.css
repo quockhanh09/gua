@@ -1521,9 +1521,7 @@ body {
   cursor: pointer;
   transition: 0.3s;
   float: right;
-  /* đẩy sang bên phải */
   margin: 5px;
-  /* thêm khoảng cách nếu cần */
 }
 
 .button-more:hover {
@@ -5934,7 +5932,7 @@ a.nav-link.active .icon-img {
   --bg: #2c2f38;
   --gold: #EEBE70;
   --gold-d: #c19e35;
-  --label: #e8d7a6;
+  --label: #ECC689;
   --text: #d6d6d6;
   --field: #f2f2f2;
   --field-border: #d9d9d9;
@@ -5958,6 +5956,7 @@ a.nav-link.active .icon-img {
     "left   right";
   align-items: start;
   margin-top: 100px;
+ transform:translateX(30px);
 }
 
 /* ===== HEADER CENTER (icon + title + desc) ===== */

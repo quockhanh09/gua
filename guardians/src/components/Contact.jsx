@@ -236,6 +236,9 @@ function Contact() {
                 Tổng số file: {currentFiles.length}
               </div>
             </div>
+             <a href="" className="btn-more">
+            Gửi <i className="bi bi-send;"></i>
+          </a>
           </form>
         </div>
 
