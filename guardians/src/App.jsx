@@ -8,6 +8,8 @@ import Footer from "./components/Footer";
 import Contact from "./components/Contact";
 import News from "./components/News";
 import Details from "./components/Deatails";
+import Newsletter from "./components/Newsletter";
+
 
 import "./style/App.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -607,6 +609,7 @@ function App() {
       <Route path="/Contact" element={<Contact />} />
       <Route path="/News" element={<News />} />
       <Route path="/Deatails" element={<Details />} />
+      <Route path="/Newsletter" element={<Newsletter />} />
     </Routes>
     <Countdown/>
     {/* ===== FOOTER ===== */}

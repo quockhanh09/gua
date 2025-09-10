@@ -53,7 +53,7 @@ function News() {
                       <div className="tag">RACE98 - 03 JUNE 2023</div>
                       <div className="title">
                         <a
-                          href="service-details.html"
+                          href="/Newsletter"
                           style={{ color: "#000000" , textDecoration: "none" }}
                         >
                           Khai máy nhân vật mới mùa giải 2025
@@ -73,7 +73,7 @@ function News() {
                       <div className="tag">RACE98 - 03 JUNE 2023</div>
                       <div className="title">
                         <a
-                          href="service-details.html"
+                          href="/Newsletter"
                            style={{ color: "#000000" , textDecoration: "none" }}
                         >
                           Khai máy nhân vật mới mùa giải 2025
@@ -120,7 +120,7 @@ function News() {
                       <div className="card-content-2">
                         <span className="tag">MÙA GIẢI 2025</span>
                         <p className="date">Debits · 03 June 2023</p>
-                        <a href="service-details.html"
+                        <a href="/Newsletter"
                          style={{textDecoration: "none" }}>
                           <h3>
                             KHỞI ĐỘNG SERVER <br />
