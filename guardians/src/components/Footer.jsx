@@ -54,7 +54,7 @@ function Footer() {
             <div className="tv-submit-wrap">
               <button className="tv-btn" type="button">
                 <a
-                  href="dang-ky.html"
+                  href="/Register"
                   style={{ color: "#233D4D", textDecoration: "none" }}
                 >
                   ĐĂNG KÝ

@@ -289,7 +289,7 @@ useEffect(() => {
    <section
       id="service-details"
       className="service-details section"
-      style={{ padding: "30px 0", backgroundImage: `url(${bgDe})` }}
+      style={{ padding: "30px 0", backgroundImage: `url(${bgDe})` , backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
       {/* Nhân Vật Chính */}
       <div style={{ marginTop: "140px" }}>

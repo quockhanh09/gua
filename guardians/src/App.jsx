@@ -9,7 +9,8 @@ import Contact from "./components/Contact";
 import News from "./components/News";
 import Details from "./components/Deatails";
 import Newsletter from "./components/Newsletter";
-
+import Register from "./signup-in/Register";
+import Login from "./signup-in/Login";
 
 import "./style/App.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -606,10 +607,13 @@ function App() {
       </>
       }
       /> 
+
       <Route path="/Contact" element={<Contact />} />
       <Route path="/News" element={<News />} />
       <Route path="/Deatails" element={<Details />} />
       <Route path="/Newsletter" element={<Newsletter />} />
+      <Route path="/Register" element={<Register />} />
+      <Route path="/Login" element={<Login />} />
     </Routes>
     <Countdown/>
     {/* ===== FOOTER ===== */}
