@@ -360,7 +360,7 @@ function App() {
 
             ))}
           </div>
-          <a href="tin-tuc.html" className="btn-more">
+          <a href="/News" className="btn-more">
             Xem thêm <i className="bi bi-arrow-right"></i>
           </a>
         </div>
@@ -476,7 +476,7 @@ function App() {
               {/* ... copy thêm các hàng còn lại từ file gốc */}
             </tbody>
           </table>
-          <a href="tin-tuc.html" className="btn-more">
+          <a href="/News" className="btn-more">
             Xem thêm <i className="bi bi-arrow-right"></i>
           </a>
         </div>
@@ -503,7 +503,7 @@ function App() {
               </div>
             ))}
           </div>
-          <a href="tin-tuc.html" className="btn-more">
+          <a href="/News" className="btn-more">
             Xem thêm <i className="bi bi-arrow-right"></i>
           </a>
         </div>
@@ -550,7 +550,7 @@ function App() {
                 </div>
               </article>
 
-              <a href="cam-nang.html" className="btn-stats-more">
+              <a href="/Deatails" className="btn-stats-more">
                 TÌM HIỂU THÊM <i className="bi bi-arrow-right"></i>
               </a>
             </div>
@@ -599,7 +599,7 @@ function App() {
           </div>
         </div>
         <div className="character-btn">
-          <a href="cam-nang.html" className="btn-stats-more-character">
+          <a href="/Deatails" className="btn-stats-more-character">
             XEM THÊM <i className="bi bi-arrow-right"></i>
           </a>
         </div>

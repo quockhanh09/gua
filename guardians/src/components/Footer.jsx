@@ -74,9 +74,9 @@ function Footer() {
 
           <nav className="sep-nav">
             <a href="/">TRANG CHỦ</a>
-            <a href="/cam-nang">GIỚI THIỆU</a>
+            <a href="/Deatails">GIỚI THIỆU</a>
             <a href="/#rank">BẢNG XẾP HẠNG</a>
-            <a href="/cskh">HỖ TRỢ</a>
+            <a href="/Contact">HỖ TRỢ</a>
           </nav>
 
           <div className="sep-socials">
