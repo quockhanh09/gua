@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-// Hàm sinh id 6 số ngẫu nhiên
+// Sinh ID 6 số ngẫu nhiên
 async function generateUniqueId(Account) {
   let unique = false;
   let newId;
   while (!unique) {
-    newId = Math.floor(100000 + Math.random() * 900000); // random 6 số
+    newId = Math.floor(100000 + Math.random() * 900000);
     const existing = await Account.findOne({ id: newId });
     if (!existing) unique = true;
   }
@@ -13,20 +13,17 @@ async function generateUniqueId(Account) {
 }
 
 const AccountSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    unique: true,
-  },
+  id: { type: Number, unique: true },
   fullName: { type: String, required: true },
   dob: { type: Date, required: true },
-  phone: { type: String, required: true, unique: true },
+  phone: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  isAdult: { type: Boolean, required: true }
+  isAdult: { type: Boolean, required: true },
 }, { timestamps: true });
 
-// Middleware auto gán id 6 số
+// Pre-save để tự sinh id
 AccountSchema.pre("save", async function (next) {
   if (!this.id) {
     this.id = await generateUniqueId(this.constructor);
