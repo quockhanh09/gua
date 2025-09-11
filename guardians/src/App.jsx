@@ -518,7 +518,7 @@ function App() {
           backgroundSize: "cover",        // không bị lặp, phủ toàn bộ section
           backgroundPosition: "center",   // căn giữa ảnh
           backgroundRepeat: "no-repeat",  // không lặp ảnh
-          minHeight: "500px",
+          minHeight: "500px", 
           maxHeight: "1200px",
           width: "100%",
           alignItems: "center",
