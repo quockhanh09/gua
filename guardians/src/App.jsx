@@ -494,10 +494,10 @@ function App() {
                 <div className="event-info">
                   <p className="event-year">2025</p>
                   <p className="event-date">30 . 10</p>
-                  <p className="event-title">
+                 <a href="/News" style={{color: "black"}}><p className="event-title">
                     Khu Thi Đấu Cyber Galaxy: <br />
                     Chung Kết Mùa Giải 2025
-                  </p>
+                  </p></a> 
                   <span className="event-link">VEVE.AI.VN</span>
                 </div>
               </div>
