@@ -296,7 +296,7 @@ function Register() {
 
         {/* Social Register */}
         <div className="register-social">
-          <p className="register-social-title">ĐĂNG KÝ BẰNG</p>
+          <p className="register-social-title" >ĐĂNG KÝ BẰNG</p>
           <div className="register-social-icons">
             <img src={googleLogo} alt="Google" />
             <img src={facebookLogo} alt="Facebook" />

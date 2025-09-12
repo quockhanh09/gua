@@ -54,7 +54,7 @@ exports.register = async (req, res) => {
     await newAccount.save();
 
     res.status(201).json({
-      msg: "Đăng ký thành công",
+      msg: "Đăng ký thành công!",
       user: {
         id: newAccount.id,
         username: newAccount.username,
@@ -119,7 +119,10 @@ exports.verifyToken = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token.replace("Bearer ", ""), process.env.JWT_SECRET || "MY_SECRET_KEY");
+    const decoded = jwt.verify(
+      token.replace("Bearer ", ""),
+      process.env.JWT_SECRET || "MY_SECRET_KEY"
+    );
     req.user = decoded;
     next();
   } catch (err) {

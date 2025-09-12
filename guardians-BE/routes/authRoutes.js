@@ -15,3 +15,18 @@ router.get("/users", async (req, res) => {
     res.status(500).json({ msg: err.message });
   }
 });
+router.delete("/:id", async (req, res) => {
+  try {
+    const user = await Account.findByIdAndDelete(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "❌ User không tồn tại" });
+    }
+
+    res.json({ message: "✅ Xóa user thành công", deletedUser: user });
+  } catch (err) {
+    res.status(500).json({ message: "❌ Lỗi server", error: err.message });
+  }
+});
+
+module.exports = router;
