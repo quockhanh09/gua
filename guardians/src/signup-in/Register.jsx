@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import logo from "../assets/img/TheGuardian_Logo_VIE 3.png";
 import googleLogo from "../assets/img/google-logo.png";
 import facebookLogo from "../assets/img/facebook-logo.png";
@@ -10,302 +10,351 @@ import instaIcon from "../assets/img/Icon-insta.svg";
 import qrIcon from "../assets/img/qr1-1.svg";
 import ggPlayIcon from "../assets/img/testimonials/gg play.svg";
 import appStoreIcon from "../assets/img/testimonials/appstore.svg";
-import bgRe from "../assets/img/volcano-02.png"
+import bgRe from "../assets/img/volcano-02.png";
 
-import "../style/signup-in.css"
+import "../style/signup-in.css";
 
 function Register() {
-    const [formData, setFormData] = useState({
-        fullname: "",
-        dob: "",
-        phone: "",
-        email: "",
-        username: "",
-        password: "",
-        confirmPassword: "",
-        ageCheck: false,
+  const [formData, setFormData] = useState({
+    fullname: "",
+    dob: "",
+    phone: "",
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+    ageCheck: false,
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleChange = (e) => {
+    const { id, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [id]: type === "checkbox" ? checked : value,
     });
+  };
 
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirm, setShowConfirm] = useState(false);
-    const [showModal, setShowModal] = useState(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const {
+      fullname,
+      dob,
+      phone,
+      email,
+      username,
+      password,
+      confirmPassword,
+      ageCheck,
+    } = formData;
 
-    const handleChange = (e) => {
-        const { id, value, type, checked } = e.target;
-        setFormData({
-            ...formData,
-            [id]: type === "checkbox" ? checked : value,
-        });
-    };
+    // ===== Validate FE =====
+    if (
+      !fullname ||
+      !dob ||
+      !phone ||
+      !email ||
+      !username ||
+      !password ||
+      !confirmPassword
+    ) {
+      alert("Vui lòng nhập đầy đủ thông tin!");
+      return;
+    }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const { fullname, dob, phone, email, username, password, confirmPassword, ageCheck } =
-            formData;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      alert(
+        "Mật khẩu phải có tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt!"
+      );
+      return;
+    }
 
-        if (!fullname || !dob || !phone || !email || !username || !password || !confirmPassword) {
-            alert("Vui lòng nhập đầy đủ thông tin!");
-            return;
-        }
+    if (password !== confirmPassword) {
+      alert("Mật khẩu xác nhận không khớp!");
+      return;
+    }
 
-        const passwordRegex =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        if (!passwordRegex.test(password)) {
-            alert("Mật khẩu phải có tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt!");
-            return;
-        }
+    // check tuổi >= 18
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+    if (age < 18) {
+      alert("Bạn phải trên 18 tuổi để đăng ký!");
+      return;
+    }
 
-        if (password !== confirmPassword) {
-            alert("Mật khẩu xác nhận không khớp!");
-            return;
-        }
+    if (!ageCheck) {
+      alert("Bạn phải xác nhận trên 18 tuổi!");
+      return;
+    }
 
-        // check tuổi >= 18
-        const birthDate = new Date(dob);
-        const today = new Date();
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const monthDiff = today.getMonth() - birthDate.getMonth();
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-        if (age < 18) {
-            alert("Bạn phải trên 18 tuổi để đăng ký!");
-            return;
-        }
+    // ===== Gửi API tới backend =====
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: fullname,
+          dob,
+          phone,
+          email,
+          username,
+          password,
+          confirmPassword,
+          isAdult: ageCheck,
+        }),
+      });
 
-        if (!ageCheck) {
-            alert("Bạn phải xác nhận trên 18 tuổi!");
-            return;
-        }
+      const data = await response.json();
 
-        setShowModal(true);
-    };
+      if (!response.ok) {
+        alert(data.msg || "Đăng ký thất bại");
+        return;
+      }
 
-    return (
-        <section className="register-section" style={{ backgroundImage: `url(${bgRe})` }}>
-            <div className="register-box">
-                {/* Logo */}
-                <div className="register-logo">
-                    <img src={logo} alt="Logo" />
-                </div>
+      alert("🎉 Đăng ký thành công!");
+      console.log("User:", data.user);
 
-                {/* Tabs */}
-                <div className="register-tabs">
-                    <button className="register-tab inactive">
-                        <a href="/Login" style={{ color: "#ECC689", textDecoration: "none" }}>
-                            ĐĂNG NHẬP
-                        </a>
-                    </button>
-                    <button className="register-tab active">ĐĂNG KÝ</button>
-                </div>
+      setShowModal(true); // mở modal xác thực
+    } catch (err) {
+      console.error("❌ Lỗi FE:", err);
+      alert("Không thể kết nối server!");
+    }
+  };
 
-                {/* Form */}
-                <form className="register-form" onSubmit={handleSubmit}>
-                    <div className="register-field">
-                        <label htmlFor="fullname">TÊN CỦA BẠN</label>
-                        <input
-                            id="fullname"
-                            type="text"
-                            placeholder="Nhập tên của bạn"
-                            value={formData.fullname}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+  return (
+    <section
+      className="register-section"
+      style={{ backgroundImage: `url(${bgRe})` }}
+    >
+      <div className="register-box">
+        {/* Logo */}
+        <div className="register-logo">
+          <img src={logo} alt="Logo" />
+        </div>
 
-                    <div className="register-field">
-                        <label htmlFor="dob">NGÀY SINH</label>
-                        <input
-                            id="dob"
-                            type="date"
-                            value={formData.dob}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+        {/* Tabs */}
+        <div className="register-tabs">
+          <button className="register-tab inactive">
+            <a
+              href="/Login"
+              style={{ color: "#ECC689", textDecoration: "none" }}
+            >
+              ĐĂNG NHẬP
+            </a>
+          </button>
+          <button className="register-tab active">ĐĂNG KÝ</button>
+        </div>
 
-                    <div className="register-field">
-                        <label htmlFor="phone">SỐ ĐIỆN THOẠI</label>
-                        <input
-                            id="phone"
-                            type="tel"
-                            placeholder="Nhập số điện thoại của bạn"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+        {/* Form */}
+        <form className="register-form" onSubmit={handleSubmit}>
+          <div className="register-field">
+            <label htmlFor="fullname">TÊN CỦA BẠN</label>
+            <input
+              id="fullname"
+              type="text"
+              placeholder="Nhập tên của bạn"
+              value={formData.fullname}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-                    <div className="register-field">
-                        <label htmlFor="email">EMAIL</label>
-                        <input
-                            id="email"
-                            type="email"
-                            placeholder="Nhập email của bạn"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+          <div className="register-field">
+            <label htmlFor="dob">NGÀY SINH</label>
+            <input
+              id="dob"
+              type="date"
+              value={formData.dob}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-                    <div className="register-field">
-                        <label htmlFor="username">TÊN ĐĂNG NHẬP</label>
-                        <input
-                            id="username"
-                            type="text"
-                            placeholder="Nhập tên đăng nhập của bạn"
-                            value={formData.username}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+          <div className="register-field">
+            <label htmlFor="phone">SỐ ĐIỆN THOẠI</label>
+            <input
+              id="phone"
+              type="tel"
+              placeholder="Nhập số điện thoại của bạn"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-                    <div className="register-field">
-                        <label htmlFor="password">MẬT KHẨU</label>
-                        <div className="register-password">
-                            <input
-                                id="password"
-                                type={showPassword ? "text" : "password"}
-                                placeholder="Nhập mật khẩu của bạn"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                            />
-                            <span
-                                className="register-toggle"
-                                onClick={() => setShowPassword(!showPassword)}
-                            >
-                                {showPassword ? "👁️" : "🙈"}
-                            </span>
-                        </div>
-                        <p className="register-hint">
-                            * Mật khẩu gồm tối thiểu 8 ký tự, bao gồm chữ cái viết hoa, viết thường, chữ số và
-                            ký tự đặc biệt
-                        </p>
-                    </div>
+          <div className="register-field">
+            <label htmlFor="email">EMAIL</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="Nhập email của bạn"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-                    <div className="register-field">
-                        <label htmlFor="confirm-password">XÁC NHẬN MẬT KHẨU</label>
-                        <div className="register-password">
-                            <input
-                                id="confirmPassword"
-                                type={showConfirm ? "text" : "password"}
-                                placeholder="Xác nhận mật khẩu của bạn"
-                                value={formData.confirmPassword}
-                                onChange={handleChange}
-                                required
-                            />
-                            <span
-                                className="register-toggle"
-                                onClick={() => setShowConfirm(!showConfirm)}
-                            >
-                                {showConfirm ? "👁️" : "🙈"}
-                            </span>
-                        </div>
-                    </div>
+          <div className="register-field">
+            <label htmlFor="username">TÊN ĐĂNG NHẬP</label>
+            <input
+              id="username"
+              type="text"
+              placeholder="Nhập tên đăng nhập của bạn"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-                    <div className="register-check">
-                        <input
-                            id="ageCheck"
-                            type="checkbox"
-                            checked={formData.ageCheck}
-                            onChange={handleChange}
-                            required
-                        />
-                        <label
-                            htmlFor="ageCheck"
-                            style={{
-                                fontFamily: "'Times New Roman', Times, serif",
-                                color: "#ECC689",
-                                fontSize: "14px",
-                            }}
-                        >
-                            XÁC NHẬN NGƯỜI DÙNG TRÊN 18 TUỔI
-                        </label>
-                    </div>
-
-                    <button type="submit" className="register-submit">
-                        ĐĂNG KÝ
-                    </button>
-                </form>
-
-                {/* Modal */}
-                {showModal && (
-                    <div id="verify-modal" className="modal" style={{ display: "flex" }}>
-                        <div className="modal-content">
-                            <img
-                                src={logo}
-                                alt="icon"
-                                style={{ height: "80px", marginBottom: "15px" }}
-                            />
-                            <h2 style={{ color: "#fff", marginBottom: "10px" }}>
-                                XÁC THỰC TÀI KHOẢN
-                            </h2>
-
-                            <div>
-                                <label style={{ color: "#d1b97f", float: "left" }}>
-                                    EMAIL / SỐ ĐIỆN THOẠI
-                                </label>
-                                <input type="text" placeholder="Nhập email hoặc số điện thoại của bạn" />
-                                <button>GỬI LẠI MÃ</button>
-                            </div>
-
-                            <div style={{ marginTop: "15px" }}>
-                                <label style={{ color: "#d1b97f", float: "left" }}>MÃ XÁC THỰC</label>
-                                <input type="text" placeholder="Nhập mã xác thực từ email/sđt" />
-                                <button>ĐĂNG KÝ</button>
-                            </div>
-
-                            <button
-                                id="close-modal"
-                                style={{ marginTop: "20px" }}
-                                onClick={() => setShowModal(false)}
-                            >
-                                Đóng
-                            </button>
-                        </div>
-                    </div>
-                )}
-
-                {/* Social Register */}
-                <div className="register-social">
-                    <p className="register-social-title">ĐĂNG KÝ BẰNG</p>
-                    <div className="register-social-icons">
-                        <img src={googleLogo} alt="Google" />
-                        <img src={facebookLogo} alt="Facebook" />
-                        <img src={appleLogo} alt="Apple" />
-                        <img src={zaloLogo} alt="Zalo" />
-                    </div>
-                </div>
+          <div className="register-field">
+            <label htmlFor="password">MẬT KHẨU</label>
+            <div className="register-password">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Nhập mật khẩu của bạn"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <span
+                className="register-toggle"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "👁️" : "🙈"}
+              </span>
             </div>
+            <p className="register-hint">
+              * Mật khẩu gồm tối thiểu 8 ký tự, bao gồm chữ cái viết hoa, viết
+              thường, chữ số và ký tự đặc biệt
+            </p>
+          </div>
 
-            {/* Apps */}
-            <div className="register-apps">
-                <a href="">
-                    <img src={fbIcon} alt="Facebook" />
-                </a>
-                <a href="">
-                    <img src={youtubeIcon} alt="YouTube" />
-                </a>
-                <a href="">
-                    <img src={instaIcon} alt="Instagram" />
-                </a>
-                <a href="">
-                    <img src={qrIcon} alt="QR" />
-                </a>
-                <a href="#">
-                    <img src={ggPlayIcon} alt="Google Play" />
-                </a>
-                <a href="">
-                    <img src={qrIcon} alt="QR" />
-                </a>
-                <a href="#">
-                    <img src={appStoreIcon} alt="App Store" />
-                </a>
+          <div className="register-field">
+            <label htmlFor="confirmPassword">XÁC NHẬN MẬT KHẨU</label>
+            <div className="register-password">
+              <input
+                id="confirmPassword"
+                type={showConfirm ? "text" : "password"}
+                placeholder="Xác nhận mật khẩu của bạn"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+              <span
+                className="register-toggle"
+                onClick={() => setShowConfirm(!showConfirm)}
+              >
+                {showConfirm ? "👁️" : "🙈"}
+              </span>
             </div>
-        </section>
-        
-    );
+          </div>
+
+          <div className="register-check">
+            <input
+              id="ageCheck"
+              type="checkbox"
+              checked={formData.ageCheck}
+              onChange={handleChange}
+              required
+            />
+            <label
+              htmlFor="ageCheck"
+              style={{
+                fontFamily: "'Times New Roman', Times, serif",
+                color: "#ECC689",
+                fontSize: "14px",
+              }}
+            >
+              XÁC NHẬN NGƯỜI DÙNG TRÊN 18 TUỔI
+            </label>
+          </div>
+
+          <button type="submit" className="register-submit">
+            ĐĂNG KÝ
+          </button>
+        </form>
+
+        {/* Modal xác thực */}
+        {showModal && (
+          <div id="verify-modal" className="modal" style={{ display: "flex" }}>
+            <div className="modal-content">
+              <img
+                src={logo}
+                alt="icon"
+                style={{ height: "80px", marginBottom: "15px" }}
+              />
+              <h2 style={{ color: "#fff", marginBottom: "10px" }}>
+                XÁC THỰC TÀI KHOẢN
+              </h2>
+              <p style={{ color: "#ECC689" }}>
+                Đăng ký thành công, hãy kiểm tra email hoặc số điện thoại của
+                bạn!
+              </p>
+              <button
+                id="close-modal"
+                style={{ marginTop: "20px" }}
+                onClick={() => setShowModal(false)}
+              >
+                Đóng
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Social Register */}
+        <div className="register-social">
+          <p className="register-social-title">ĐĂNG KÝ BẰNG</p>
+          <div className="register-social-icons">
+            <img src={googleLogo} alt="Google" />
+            <img src={facebookLogo} alt="Facebook" />
+            <img src={appleLogo} alt="Apple" />
+            <img src={zaloLogo} alt="Zalo" />
+          </div>
+        </div>
+      </div>
+
+      {/* Apps */}
+      <div className="register-apps">
+        <a href="">
+          <img src={fbIcon} alt="Facebook" />
+        </a>
+        <a href="">
+          <img src={youtubeIcon} alt="YouTube" />
+        </a>
+        <a href="">
+          <img src={instaIcon} alt="Instagram" />
+        </a>
+        <a href="">
+          <img src={qrIcon} alt="QR" />
+        </a>
+        <a href="#">
+          <img src={ggPlayIcon} alt="Google Play" />
+        </a>
+        <a href="">
+          <img src={qrIcon} alt="QR" />
+        </a>
+        <a href="#">
+          <img src={appStoreIcon} alt="App Store" />
+        </a>
+      </div>
+    </section>
+  );
 }
 
 export default Register;

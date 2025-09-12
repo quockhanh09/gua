@@ -9,7 +9,7 @@ import instaIcon from "../assets/img/Icon-insta.svg";
 import qrIcon from "../assets/img/qr1-1.svg";
 import ggPlayIcon from "../assets/img/testimonials/gg play.svg";
 import appStoreIcon from "../assets/img/testimonials/appstore.svg";
-import bgLo from "../assets/img/volcano-01.png"
+import bgLo from "../assets/img/volcano-01.png";
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -20,20 +20,56 @@ const Login = () => {
     setPasswordVisible((prev) => !prev);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Handle login logic here
+
+    if (!username || !password) {
+      alert("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.msg || "Đăng nhập thất bại");
+        return;
+      }
+
+      alert("🎉 Đăng nhập thành công!");
+      console.log("User:", data.user);
+
+      // 👉 Lưu token vào localStorage để dùng cho các request cần xác thực
+      localStorage.setItem("token", data.token);
+
+      // 👉 Chuyển hướng sang trang khác nếu muốn (VD: dashboard)
+      // window.location.href = "/dashboard";
+    } catch (err) {
+      console.error("❌ Lỗi FE:", err);
+      alert("Không thể kết nối server!");
+    }
   };
 
   return (
     <div>
-      <section className="body-ath" style={{ backgroundImage: `url(${bgLo})`, padding: "30px 0",  }}>
+      <section
+        className="body-ath"
+        style={{ backgroundImage: `url(${bgLo})`, padding: "30px 0" }}
+      >
         <div className="auth-box">
           {/* Logo */}
           <img src={logo} alt="Logo" className="auth-logo" />
 
-          {/* Nút thông báo */}
-          <div className="auth-register-msg">ĐĂNG KÝ TÀI KHOẢN THÀNH CÔNG</div>
+          {/* Thông báo (tuỳ chọn) */}
+          <div className="auth-register-msg">ĐĂNG NHẬP TÀI KHOẢN</div>
 
           {/* Form */}
           <form className="auth-form" onSubmit={handleLogin}>
