@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // 👈 thêm dòng này
 import "../style/signup-in.css";
 
 // Import images
@@ -15,6 +16,8 @@ const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate(); // 👈 hook để điều hướng
 
   const handleTogglePassword = () => {
     setPasswordVisible((prev) => !prev);
@@ -44,14 +47,12 @@ const Login = () => {
         return;
       }
 
-      alert("🎉 Đăng nhập thành công!");
-      console.log("User:", data.user);
-
-      // 👉 Lưu token vào localStorage để dùng cho các request cần xác thực
+      // 👉 Lưu token vào localStorage
       localStorage.setItem("token", data.token);
 
-      // 👉 Chuyển hướng sang trang khác nếu muốn (VD: dashboard)
-      // window.location.href = "/dashboard";
+      // 👉 Điều hướng sang trang chủ
+      navigate("/"); // 👈 bay ra trang chủ
+
     } catch (err) {
       console.error("❌ Lỗi FE:", err);
       alert("Không thể kết nối server!");
@@ -68,10 +69,8 @@ const Login = () => {
           {/* Logo */}
           <img src={logo} alt="Logo" className="auth-logo" />
 
-          {/* Thông báo (tuỳ chọn) */}
           <div className="auth-register-msg">ĐĂNG NHẬP TÀI KHOẢN</div>
 
-          {/* Form */}
           <form className="auth-form" onSubmit={handleLogin}>
             <div className="auth-group">
               <label htmlFor="username">TÊN ĐĂNG NHẬP</label>
@@ -105,7 +104,6 @@ const Login = () => {
               </span>
             </div>
 
-            {/* Nút đăng nhập */}
             <button className="auth-btn-login" type="submit">
               ĐĂNG NHẬP
             </button>

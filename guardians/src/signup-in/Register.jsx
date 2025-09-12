@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // 👉 import useNavigate
 import logo from "../assets/img/TheGuardian_Logo_VIE 3.png";
 import googleLogo from "../assets/img/google-logo.png";
 import facebookLogo from "../assets/img/facebook-logo.png";
@@ -28,7 +29,8 @@ function Register() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+
+  const navigate = useNavigate(); // 👉 hook để chuyển trang
 
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
@@ -129,7 +131,9 @@ function Register() {
       alert("🎉 Đăng ký thành công!");
       console.log("User:", data.user);
 
-      setShowModal(true); // mở modal xác thực
+      // 👉 Chuyển hướng sang trang Login
+      navigate("/login");
+
     } catch (err) {
       console.error("❌ Lỗi FE:", err);
       alert("Không thể kết nối server!");
@@ -289,33 +293,6 @@ function Register() {
             ĐĂNG KÝ
           </button>
         </form>
-
-        {/* Modal xác thực */}
-        {showModal && (
-          <div id="verify-modal" className="modal" style={{ display: "flex" }}>
-            <div className="modal-content">
-              <img
-                src={logo}
-                alt="icon"
-                style={{ height: "80px", marginBottom: "15px" }}
-              />
-              <h2 style={{ color: "#fff", marginBottom: "10px" }}>
-                XÁC THỰC TÀI KHOẢN
-              </h2>
-              <p style={{ color: "#ECC689" }}>
-                Đăng ký thành công, hãy kiểm tra email hoặc số điện thoại của
-                bạn!
-              </p>
-              <button
-                id="close-modal"
-                style={{ marginTop: "20px" }}
-                onClick={() => setShowModal(false)}
-              >
-                Đóng
-              </button>
-            </div>
-          </div>
-        )}
 
         {/* Social Register */}
         <div className="register-social">
