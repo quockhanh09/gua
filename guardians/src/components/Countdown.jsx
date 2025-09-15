@@ -11,7 +11,7 @@ function Countdown() {
   });
 
   useEffect(() => {
-    const targetDate = new Date("Sep 15, 2025 20:00:00").getTime();
+    const targetDate = new Date("Dec 25, 2025 20:00:00").getTime();
 
     const updateCountdown = () => {
       const now = new Date().getTime();

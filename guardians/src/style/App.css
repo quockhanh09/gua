@@ -288,7 +288,7 @@ span {
   background-color: var(--background-color);
   padding: 20px 0;
   transition: all 0.5s;
-position: absolute;   /* đặt chồng lên hero */
+  position: absolute;   /* đặt chồng lên hero */
   top: 0;
   left: 0;
   width: 100%;
